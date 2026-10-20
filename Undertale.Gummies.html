@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undertale Gummies & LVL Shop</title>
+    <!-- Подключаем файл со стилями и пиксельный шрифт -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Шапка сайта -->
+        <header>
+            <div class="logo-area">
+                <h1>UNDERTALE GUMMIES</h1>
+                <p>Магазин решительно вкусных мармеладок</p>
+            </div>
+            <div class="auth-buttons">
+                <button onclick="openModal('loginModal')">Вход</button>
+                <button onclick="openModal('regModal')">Регистрация</button>
+            </div>
+        </header>
+
+        <!-- Игровая Панель УР (Уровня Резни / Радости) -->
+        <section class="status-panel">
+            <div class="status-header">
+                <div>ИГРОК: <span id="userName" class="user-name">Frisk</span></div>
+                <div>УР: <span id="userLvl" class="user-lvl">1</span> / 20</div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-label">EXP</div>
+                <div class="bar-bg">
+                    <div id="lvlBar" class="bar-fill"></div>
+                </div>
+            </div>
+            <div class="discount-info">
+                Ваш уровень УР дает скидку: <span id="discountValue">5%</span> на все наборы!
+            </div>
+        </section>
+
+        <!-- Розыгрыши Редких Предметов Персонажей -->
+        <section class="giveaway-section">
+            <h2>⭐ РОЗЫГРЫШИ ОТ ПЕРСОНАЖЕЙ ⭐</h2>
+            <div class="giveaway-container">
+                <!-- Медальон -->
+                <div class="giveaway-item">
+                    <h3>The Locket (Медальон Чары)</h3>
+                    <div class="giveaway-pic">🏅</div>
+                    <button class="giveaway-btn" onclick="joinGiveaway('Настоящий Медальон Чары')">Участвовать</button>
+                </div>
+                <!-- Кофта -->
+                <div class="giveaway-item">
+                    <h3>Chara's Sweater (Кофта Чары)</h3>
+                    <div class="giveaway-pic">👕</div>
+                    <button class="giveaway-btn" onclick="joinGiveaway('Зеленый свитер Чары')">Участвовать</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Витрина Товаров -->
+        <h2 class="shop-title">ВЫБЕРИ СВОЙ НАБОР СЛАДОСТЕЙ:</h2>
+        <main class="products-grid">
+            
+            <div class="product-card">
+                <div>
+                    <div class="product-img">❤️</div>
+                    <h3 class="product-name">Набор RESHIMOST'</h3>
+                    <p class="product-desc">Клубничные мармеладные души. Наполняют ваше сердце силой идти дальше.</p>
+                </div>
+                <div class="product-footer">
+                    <span class="price">150 G</span>
+                    <button class="buy-btn" onclick="buyJelly('Набор RESHIMOST\'', 25)">Купить</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div>
+                    <div class="product-img">⭐</div>
+                    <h3 class="product-name">ZVEZDA Сохранения</h3>
+                    <p class="product-desc">Лимонные искрящиеся звёздочки. Даруют ощущение полной безопасности.</p>
+                </div>
+                <div class="product-footer">
+                    <span class="price">200 G</span>
+                    <button class="buy-btn" onclick="buyJelly('ZVEZDA Сохранения', 35)">Купить</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div>
+                    <div class="product-img">🔪</div>
+                    <h3 class="product-name">Nastoyashchiy Nozh</h3>
+                    <p class="product-desc">Ежевичные желейные лезвия. Невероятно острый ягодный вкус. Будьте аккуратны!</p>
+                </div>
+                <div class="product-footer">
+                    <span class="price">350 G</span>
+                    <button class="buy-btn" onclick="buyJelly('Nastoyashchiy Nozh', 60)">Купить</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div>
+                    <div class="product-img">❄️</div>
+                    <h3 class="product-name">Magiya Snowdina</h3>
+                    <p class="product-desc">Чернично-ментоловые льдинки прямиком из заснеженного леса Санса и Папируса.</p>
+                </div>
+                <div class="product-footer">
+                    <span class="price">180 G</span>
+                    <button class="buy-btn" onclick="buyJelly('Magiya Snowdina', 30)">Купить</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Модальное Окно: Вход -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>ЗАГРУЗИТЬ СОХРАНЕНИЕ</h2>
+            <input type="text" id="loginName" placeholder="Имя человека">
+            <input type="password" placeholder="Пароль">
+            <button class="submit-btn" onclick="submitLogin()">ВОЙТИ</button>
+            <button class="close-btn" onclick="closeModal('loginModal')">Отмена</button>
+        </div>
+    </div>
+
+    <!-- Модальное Окно: Регистрация -->
+    <div id="regModal" class="modal">
+        <div class="modal-content">
+            <h2>НАЧАТЬ НОВУЮ ИГРУ</h2>
+            <input type="text" id="regName" placeholder="Придумайте Имя">
+            <input type="password" placeholder="Придумайте Пароль">
+            <button class="submit-btn" onclick="submitRegister()">СОЗДАТЬ</button>
+            <button class="close-btn" onclick="closeModal('regModal')">Отмена</button>
+        </div>
+    </div>
+
+    <!-- Подключаем логику скрипта -->
+    <script src="script.js"></script>
+</body>
+</html>
